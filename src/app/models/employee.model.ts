@@ -2,7 +2,7 @@ export class Employee {
   Id:number;
   Name: string;
   Area:string;
-  InitDate:Date;
+  Dob:Date;
   JobTitle:string;
   Country:string;
   UserName:string;
