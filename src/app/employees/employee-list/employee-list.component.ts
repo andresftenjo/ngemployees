@@ -14,7 +14,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class EmployeeListComponent implements OnInit {
 
   employees: Employee[]=[];
-  displayedColumns: string[] = ['name', 'dob', 'username', 'hiredate'];
+  displayedColumns: string[] = ['name', 'dob', 'username', 'hiredate', 'details', 'update', 'delete'];
   public dataSource = new MatTableDataSource<Employee>();
 
   constructor(private employeeService: EmployeeService) { }
@@ -52,6 +52,15 @@ export class EmployeeListComponent implements OnInit {
     });
   }
 
+  public goToDetails = (id:number) => {
+
+  }
+  public goToUpdate = (id:number) => {
+    console.log(id);
+  }
+  public goToDelete = (id:number) => {
+
+  }
 }
 function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);

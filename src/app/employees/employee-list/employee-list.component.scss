@@ -1,14 +1,27 @@
 table{
   width: 100%;
 }
+.table-employees{
+  button{
+    background: transparent;
+    border: 0;
+    color: white;
+    cursor: pointer;
+  }
+}
 .example-form {
   min-width: 150px;
   max-width: 500px;
   width: 100%;
 }
 
-.example-full-width {
-  width: 100%;
+.mat-form-full-width {
+  width: 96%;
+  background: #424242;
+  padding: 2%;
+  input {
+    color: white;
+  }
 }
 .mat-form-field-appearance-legacy .mat-form-field-label{
   color:#424242 !important;
