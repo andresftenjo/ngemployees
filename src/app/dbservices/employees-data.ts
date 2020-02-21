@@ -28,6 +28,18 @@ export class EmployeesData implements InMemoryDbService {
         HireDate:new Date('July 19, 2013 00:00:00'),
         Rate:'',
         Status:false
+      },
+      {
+        Id: 3,
+        Name: 'Camilo',
+        Area: '',
+        Dob: new Date('July 22, 1982 00:00:00'),
+        JobTitle:'',
+        Country:'',
+        UserName:'camilo88@hotmail.com',
+        HireDate:new Date('September 27, 2019 00:00:00'),
+        Rate:'',
+        Status:false
       }
     ];
     return {employees};

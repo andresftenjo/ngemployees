@@ -1,6 +1,98 @@
 <h2>Create Employee</h2>
 
-<mat-card fxFlex fxLayoutAlign="start left" fxLayout="column" class="footer-buttons">
-  <button mat-raised-button color="accent" routerLink="/">Back</button>
-  <button mat-raised-button color="primary">Create</button>
+<mat-card fxFlex fxLayoutAlign="start left" fxLayout="column">
+  <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+
+    <table class="form-table">
+      <tr>
+        <td>
+          <mat-form-field appearance="" class="">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Name" formControlName="name"
+                    [errorStateMatcher]="matcher">
+            <mat-error>
+              <span *ngIf="!addForm.get('name').valid && addForm.get('name').touched">Please enter Name</span>
+            </mat-error>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field>
+            <mat-label>Select Area</mat-label>
+            <mat-select [(ngModel)]="selectedArea" name="area" formControlName="selectedArea">
+              <mat-option *ngFor="let area of areas" [value]="area.value" (onSelectionChange)="refreshJobs($event)">
+                {{area.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput [max]="maxDobDate" [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </td>
+        <td>
+          <app-job-title [selectedArea]="selectedArea"></app-job-title>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="select-country">
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="selectedCountry">
+              <mat-option *ngFor="let c of countries" [value]="c.alpha2Code">
+                {{c.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td>
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field appearance="" class="">
+            <mat-label>User Name</mat-label>
+            <input matInput placeholder="User name" formControlName="username"
+                    [errorStateMatcher]="matcher">
+            <mat-error>
+              <span *ngIf="!addForm.get('username').valid && addForm.get('username').touched">Please enter a valid Username</span>
+            </mat-error>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field>
+            <mat-label>Hire Date</mat-label>
+            <input matInput [matDatepicker]="hireDate">
+            <mat-datepicker-toggle matSuffix [for]="hireDate"></mat-datepicker-toggle>
+            <mat-datepicker #hireDate></mat-datepicker>
+          </mat-form-field>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>
+          <mat-slide-toggle color="primary" formControlName="isActive">Active</mat-slide-toggle>
+        </td>
+        <td>
+
+        </td>
+      </tr>
+    </table>
+
+    <mat-divider></mat-divider>
+
+  </form>
+  <br>
+  <div class="footer-buttons">
+    <button mat-raised-button color="accent" routerLink="/">Back</button>
+    <button mat-raised-button color="primary">Create</button>
+  </div>
 </mat-card>
