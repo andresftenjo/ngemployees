@@ -1,6 +1,8 @@
 # Intergtestng
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.2.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.2 with Material [Material](https://material.angular.io/) version 9.0.1. 
+
+Using restcountries.eu API and InMemoryDataService 
 
 ## Development server
 
