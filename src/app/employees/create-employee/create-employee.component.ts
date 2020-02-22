@@ -8,6 +8,8 @@ import { Area } from 'src/app/models/area.model';
 import { CountryService } from 'src/app/services/country.service';
 import { Country } from 'src/app/models/country.model';
 import {Observable} from 'rxjs';
+import {EmployeeService} from "../../services/employee.service";
+import Swal from "sweetalert2";
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -24,6 +26,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   providers: [CountryService]
 })
 export class CreateEmployeeComponent implements OnInit {
+
+  public employee: Employee = new Employee();
 
   addForm: FormGroup;
   name : string;
@@ -44,39 +48,73 @@ export class CreateEmployeeComponent implements OnInit {
   ];
   countries: Country[] = [];
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private countryService: CountryService) {
-
+  constructor(private formBuilder: FormBuilder, private router: Router, private countryService: CountryService,
+              private employeeService: EmployeeService) {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
 
     this.maxDobDate = new Date(currentYear - 18, currentDate.getMonth(), currentDate.getDate());
    }
 
+   defaultFieldsState(): void {
+    this.addForm =  new FormGroup({
+      name: new FormControl('', Validators.required),
+      selectedArea: new FormControl('', Validators.required),
+      selectedJob: new FormControl('', Validators.required),
+      selectedCountry : new FormControl('', Validators.required),
+      username: new FormControl('', Validators.required),
+      hireDate: new FormControl('', Validators.required),
+      dob: new FormControl('', Validators.required),
+      tipRate: new FormControl('0', Validators.required),
+      isActive: new FormControl('', Validators.required)
+    });
+   }
+
   ngOnInit(): void {
     this.getCounties();
-    this.addForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      selectedArea: ['', Validators.required],
-      selectedJob:  ['', Validators.required],
-      selectedCountry : ['', Validators.required],
-      username: ['', Validators.required],
-      hireDate: ['', Validators.required],
-      isActive: ['', Validators.required]
-    });
+    this.defaultFieldsState();
   }
 
   refreshJobs(event){
-    this.selectedArea = event.source.value;
+    if (event.isUserInput) {
+        this.selectedArea = event.source.value;
+    }
   }
-
   getCounties(){
-    this.countryService.getCounties().subscribe(data => {
+    this.countryService.getCounties().subscribe((data: any) => {
       this.countries = data;
     });
   }
 
-  onSubmit() {
+  onSubmit(data: FormGroup | any) {
 
+    if (data.selectedJob === 'waitress' || data.selectedJob ===  'diningmanager'){
+      this.employee.Rate = this.addForm.get('tipRate').value;
+    }
+
+    if (this.addForm.valid){
+      this.employee.Name = this.addForm.get('name').value;
+      this.employee.Area = this.addForm.get('selectedArea').value;
+      this.employee.JobTitle = this.addForm.get('selectedJob').value;
+      this.employee.Country = this.addForm.get('selectedCountry').value;
+      this.employee.UserName = this.addForm.get('username').value;
+      this.employee.HireDate = this.addForm.get('hireDate').value;
+      this.employee.Dob = this.addForm.get('dob').value;
+      this.employee.Status = this.addForm.get('isActive').value;
+      this.employeeService.addEmployee(this.employee).subscribe(() => {
+        Swal.fire(
+          'Created!',
+          'Success',
+          'success'
+        );
+        this.defaultFieldsState();
+      });
+    }
   }
 
+  data(event){
+    this.selectedJob = event;
+    this.addForm.get('selectedJob').setValue(this.selectedJob);
+    this.employee.JobTitle = this.selectedJob;
+  }
 }

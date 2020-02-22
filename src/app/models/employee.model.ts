@@ -1,12 +1,12 @@
 export class Employee {
-  Id:number;
-  Name: string;
-  Area:string;
-  Dob:Date;
-  JobTitle:string;
-  Country:string;
-  UserName:string;
-  HireDate:Date;
-  Rate:string;
-  Status:boolean;
+  id: number;
+  Name: any;
+  Area:any;
+  Dob:any;
+  JobTitle:any;
+  Country:any;
+  UserName:any;
+  HireDate:any;
+  Rate:any;
+  Status:any;
 }

@@ -3,6 +3,8 @@ import { EmployeeService } from 'src/app/services/employee.service';
 import { Employee } from 'src/app/models/employee.model';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import {Router} from '@angular/router';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-employee-list',
@@ -17,7 +19,8 @@ export class EmployeeListComponent implements OnInit {
   displayedColumns: string[] = ['name', 'dob', 'username', 'hiredate', 'details', 'update', 'delete'];
   public dataSource = new MatTableDataSource<Employee>();
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService,
+              private router: Router) { }
 
   getEmployees(){
     this.employeeService.getEmployees().subscribe(data => {
@@ -53,13 +56,36 @@ export class EmployeeListComponent implements OnInit {
   }
 
   public goToDetails = (id:number) => {
-
+    this.router.navigate(['/view', id]);
   }
+
   public goToUpdate = (id:number) => {
-    console.log(id);
+    this.router.navigate(['/edit', id]);
   }
-  public goToDelete = (id:number) => {
 
+  public goToDelete = (id:number) => {
+    this.employeeService.deleteEmployee(id).subscribe((data: any) => {
+      this.getEmployees();
+      Swal.fire(
+        'Deleted!',
+        'Success',
+        'success'
+      );
+    });
+  }
+
+  add(name: string): void {
+    name = name.trim();
+    if (!name) { return; }
+    this.employeeService.addEmployee({name} as unknown as Employee)
+      .subscribe(hero => {
+        this.employees.push(hero);
+      });
+  }
+
+  delete(employee: Employee): void {
+    this.employees = this.employeeService.filter(h => h !== employee);
+    this.employeeService.deleteEmployee(employee).subscribe();
   }
 }
 function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {

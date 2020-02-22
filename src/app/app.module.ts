@@ -1,7 +1,9 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule }       from '@angular/core';
+import { BrowserModule }  from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { AppRoutingModule }     from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeComponent } from './employees/employee/employee.component';
@@ -33,17 +35,13 @@ import { AgeFormDate } from './pipes/age-form-date';
 
 import {MatInputModule} from '@angular/material/input';
 import { JobTitleComponent } from './job-title/job-title.component';
+import { EditEmployeeComponent } from './employees/edit-employee/edit-employee.component';
+import { MessagesComponent} from "./messages/messages.component";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
+import {CountryService} from "./services/country.service";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    EmployeesComponent,
-    EmployeeComponent,
-    EmployeeListComponent,
-    AgeFormDate,
-    CreateEmployeeComponent,
-    JobTitleComponent
-  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -64,14 +62,28 @@ import { JobTitleComponent } from './job-title/job-title.component';
     MatNativeDateModule,
     MatRippleModule,
     MatSelectModule,
+    MatSnackBarModule,
     MatSlideToggleModule,
     FormsModule,
     ReactiveFormsModule,
-    InMemoryWebApiModule.forRoot(EmployeesData, {
-      passThruUnknownUrl: true
-    })
+    HttpClientInMemoryWebApiModule.forRoot( // Remove it when a real server is ready to receive requests.
+      EmployeesData, { passThruUnknownUrl: true }
+    )
   ],
-  providers: [EmployeeService],
-  bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    EmployeesComponent,
+    EmployeeComponent,
+    EmployeeListComponent,
+    AgeFormDate,
+    CreateEmployeeComponent,
+    JobTitleComponent,
+    EditEmployeeComponent,
+    MessagesComponent,
+    AlertDialogComponent
+  ],
+  providers: [CountryService],
+  bootstrap: [ AppComponent ]
 })
+
 export class AppModule { }

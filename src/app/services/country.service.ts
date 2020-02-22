@@ -9,7 +9,7 @@ import { Country } from '../models/country.model';
 })
 export class CountryService {
 
-  countriesUrl = 'http://restcountries.eu/rest/v2/all';
+  countriesUrl = 'http://restcountries.eu/rest/v1/all';
 
   constructor(private http: HttpClient) { }
 

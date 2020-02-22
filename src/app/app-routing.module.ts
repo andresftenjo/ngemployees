@@ -1,15 +1,20 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { CreateEmployeeComponent } from './employees/create-employee/create-employee.component';
-import { EmployeesComponent } from './employees/employees.component';
+import { RouterModule, Routes } from '@angular/router';
+
+import {EmployeesComponent} from "./employees/employees.component";
+import {CreateEmployeeComponent} from "./employees/create-employee/create-employee.component";
+import {EditEmployeeComponent} from "./employees/edit-employee/edit-employee.component";
+import {EmployeeComponent} from "./employees/employee/employee.component";
 
 const routes: Routes = [
+  { path: '', component: EmployeesComponent },
   { path: 'add', component: CreateEmployeeComponent },
-  { path: '', component: EmployeesComponent }
+  { path: 'edit/:id', component: EditEmployeeComponent },
+  { path: 'view/:id', component: EmployeeComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [ RouterModule.forRoot(routes) ],
+  exports: [ RouterModule ]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

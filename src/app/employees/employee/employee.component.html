@@ -1,1 +1,99 @@
-<p>employee works!</p>
+<div *ngIf="employee">
+  <h2>Employee: {{employee.Name}}</h2>
+
+  <mat-card fxFlex fxLayoutAlign="start left" fxLayout="column">
+
+      <table class="form-table">
+        <tr>
+          <td>
+            <mat-form-field appearance="" class="">
+              <mat-label>Name</mat-label>
+
+              <input matInput placeholder="Name"
+                     [(ngModel)]="employee.Name" disabled>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-label>Select Area</mat-label>
+                <input matInput type="text" [value]="employee.Area" disabled>
+
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field class="">
+              <mat-label>Date of Birth</mat-label>
+              <input disabled matInput [(ngModel)]="employee.Dob" [matDatepicker]="picker">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-label>Select Job</mat-label>
+              <input matInput type="text" [value]="employee.JobTitle" disabled>
+
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field class="select-country">
+              <mat-label>Country</mat-label>
+              <input matInput type="text" [(ngModel)]="employee.Country" disabled>
+            </mat-form-field>
+          </td>
+          <td>
+            <div *ngIf="employee.Rate > 0">
+
+              <mat-form-field class="select-country">
+                <mat-label>Tip Rate</mat-label>
+                <input matInput type="number" disabled [(ngModel)]="employee.Rate">
+              </mat-form-field>
+
+            </div>
+
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field appearance="" class="">
+              <mat-label>User Name</mat-label>
+              <input matInput placeholder="User name" [(ngModel)]="employee.UserName" disabled>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field>
+              <mat-label>Hire Date</mat-label>
+              <input [(ngModel)]="employee.HireDate" disabled matInput [matDatepicker]="hireDate">
+              <mat-datepicker-toggle matSuffix [for]="hireDate"></mat-datepicker-toggle>
+              <mat-datepicker #hireDate ></mat-datepicker>
+            </mat-form-field>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>
+            <mat-slide-toggle color="primary" disabled [(ngModel)]="employee.Status">Status</mat-slide-toggle>
+          </td>
+          <td>
+
+          </td>
+        </tr>
+      </table>
+
+      <mat-divider></mat-divider>
+
+    <br>
+    <div class="footer-buttons">
+      <button mat-raised-button color="accent" routerLink="/">Back</button>
+      <button mat-raised-button color="primary" [routerLink]="['/edit', id]">Edit</button>
+    </div>
+  </mat-card>
+</div>
+
+

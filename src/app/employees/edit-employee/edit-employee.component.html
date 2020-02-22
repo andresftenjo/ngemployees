@@ -1,0 +1,111 @@
+<div *ngIf="employee">
+
+  <h2>Edit Employee {{employee.Name}}</h2>
+
+  <mat-card fxFlex fxLayoutAlign="start left" fxLayout="column">
+    <form [formGroup]="form" (ngSubmit)="edit(form.value)">
+
+      <table class="form-table">
+        <tr>
+          <td>
+            <mat-form-field color="accent">
+              <mat-label>Name</mat-label>
+              <input matInput placeholder="Name" formControlName="name"
+                     [errorStateMatcher]="matcher">
+              <mat-error>
+                <span *ngIf="!form.get('name').valid && form.get('name').touched">Please enter Name</span>
+              </mat-error>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field color="accent">
+              <mat-label>Select Area</mat-label>
+              <mat-select name="area" formControlName="selectedArea">
+                <mat-option *ngFor="let area of areas" [value]="area.value" (onSelectionChange)="refreshJobs($event)">
+                  {{area.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field color="accent">
+              <mat-label>Date of Birth</mat-label>
+              <input formControlName="dob" matInput [max]="maxDobDate" [matDatepicker]="picker">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </td>
+          <td>
+            <app-job-title [selectedJobIn]="employee.JobTitle" [selectedArea]="selectedArea" (sendJob)="data($event)"></app-job-title>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field class="select-country" color="accent">
+              <mat-label>Country</mat-label>
+              <mat-select formControlName="selectedCountry">
+                <mat-option *ngFor="let c of countries" [value]="c.name">
+                  {{c.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <div *ngIf="selectedJob === 'waitress' || selectedJob ===  'diningmanager'">
+
+              <mat-form-field class="select-country" color="accent">
+                <mat-label>Tip Rate</mat-label>
+                <input min="0" max="100" step="0.01" matInput type="number" formControlName="tipRate">
+              </mat-form-field>
+
+            </div>
+
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field color="accent">
+              <mat-label>User Name</mat-label>
+              <input matInput placeholder="User name" formControlName="username"
+                     [errorStateMatcher]="matcher">
+              <mat-error>
+                <span *ngIf="!form.get('username').valid && form.get('username').touched">Please enter a valid Username</span>
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field color="accent">
+              <mat-label>Hire Date</mat-label>
+              <input formControlName="hireDate" matInput [matDatepicker]="hireDate">
+              <mat-datepicker-toggle matSuffix [for]="hireDate"></mat-datepicker-toggle>
+              <mat-datepicker #hireDate></mat-datepicker>
+            </mat-form-field>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>
+            <mat-slide-toggle color="primary" formControlName="isActive">Active</mat-slide-toggle>
+          </td>
+          <td>
+
+          </td>
+        </tr>
+      </table>
+
+      <mat-divider></mat-divider>
+
+    </form>
+    <br>
+    <div class="footer-buttons">
+      <button mat-raised-button color="accent" routerLink="/">Back</button>
+      <button mat-raised-button color="primary" (click)="edit(form.value)" >Save</button>
+    </div>
+  </mat-card>
+
+
+</div>

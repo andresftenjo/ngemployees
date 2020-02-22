@@ -1,16 +1,18 @@
-<mat-form-field *ngIf="selectedArea === 'services'">
+<mat-form-field color="accent" *ngIf="selectedArea === 'services'">
   <mat-label>Select services</mat-label>
-  <mat-select [(ngModel)]="selectedJob" name="job" formControlName="selectedJob">
+  <mat-select [(ngModel)]="selectedJob" name="job">
     <mat-option *ngFor="let job of jobTitles1" [value]="job.value" (onSelectionChange)="setJob($event)">
       {{job.viewValue}}
     </mat-option>
   </mat-select>
 </mat-form-field>
-<mat-form-field *ngIf="selectedArea === 'kitchen'">
+<mat-form-field color="accent" *ngIf="selectedArea === 'kitchen'">
   <mat-label>Select services</mat-label>
-  <mat-select [(ngModel)]="selectedJob" name="job" formControlName="selectedJob">
-    <mat-option *ngFor="let job of jobTitles2" [value]="job.value" (onSelectionChange)="setJob($event)">
+  <mat-select [(ngModel)]="selectedJob" name="job"  >
+    <mat-option *ngFor="let job of jobTitles2"[value]="job.value" (onSelectionChange)="setJob($event)" >
       {{job.viewValue}}
     </mat-option>
+
   </mat-select>
 </mat-form-field>
+

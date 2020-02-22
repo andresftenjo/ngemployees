@@ -1,14 +1,19 @@
-import { Component, OnInit , Input } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, OnChanges} from '@angular/core';
 import { JobTitle } from '../models/job-title.model';
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-job-title',
   templateUrl: './job-title.component.html',
   styleUrls: ['./job-title.component.scss']
 })
-export class JobTitleComponent implements OnInit {
+export class JobTitleComponent implements OnInit, OnChanges {
 
   @Input() selectedArea: string;
+  @Input() selectedJobIn: string;
+  @Output() sendJob = new EventEmitter();
+
+  public form: FormGroup;
 
   jobTitles1: JobTitle[] = [
     {value: 'manager', viewValue: 'Manager'},
@@ -29,14 +34,20 @@ export class JobTitleComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.form = new FormGroup({
+      selectedJob: new FormControl()
+    });
+    if (this.selectedJobIn){
+      this.selectedJob = this.selectedJobIn;
+    }
 
   }
   ngOnChanges() : void {
-    console.log(this.selectedArea);
   }
 
   setJob(event){
-    //this.selectedJob = event.source.value;
-    //console.log(this.selectedJob);
+    this.selectedJob = event.source.value;
+    this.sendJob.emit(this.selectedJob);
   }
+
 }
